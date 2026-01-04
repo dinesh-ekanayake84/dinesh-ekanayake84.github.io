@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dinesh Lanka Ekanayake</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#0b0f1a;color:#e9ecf1;}
+    .wrap{max-width:900px;margin:0 auto;padding:56px 20px;}
+    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:28px;}
+    h1{margin:0 0 6px;font-size:34px;letter-spacing:.2px}
+    .sub{opacity:.85;margin:0 0 18px;font-size:16px}
+    .tag{margin:0 0 22px; font-style:italic; opacity:.9}
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
+    .box{padding:16px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.10)}
+    a{color:#a9c7ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .small{opacity:.8;font-size:13px;margin-top:16px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Dinesh Lanka Ekanayake</h1>
+      <p class="sub">Operations & Event Management | Exploring Business Informatics & Digital Systems</p>
+      <p class="tag">Ideas With Purpose. Execution With Impact.</p>
+
+      <div class="grid">
+        <div class="box">
+          <strong>About</strong>
+          <p class="sub">I build structured, reliable ways to plan and deliver complex operations—now expanding into digital systems and research.</p>
+        </div>
+        <div class="box">
+          <strong>Projects</strong>
+          <p class="sub">Selected work will be added here (case studies, frameworks, and research outputs).</p>
+        </div>
+        <div class="box">
+          <strong>Connect</strong>
+          <p class="sub">
+            LinkedIn: <a href="#" target="_blank" rel="noreferrer">Add link</a><br/>
+            Email: <a href="mailto:your@email.com">your@email.com</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="small">Last updated: <span id="d"></span></p>
+    </div>
+  </div>
+  <script>document.getElementById("d").textContent=new Date().toISOString().slice(0,10);</script>
+</body>
+</html>
