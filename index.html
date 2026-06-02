@@ -313,30 +313,6 @@
       color: rgba(255,255,255,0.55);
       text-transform: uppercase;
     }
-    /* Placeholder slide when no image */
-    .slide-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);
-      border: 1px dashed #2a2a2a;
-    }
-    .slide-placeholder-text {
-      text-align: center;
-      color: var(--muted);
-    }
-    .slide-placeholder-text .icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.3;
-    }
-    .slide-placeholder-text p {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
 
     /* Slideshow controls */
     .slide-controls {
@@ -378,24 +354,6 @@
       transition: border-color 0.3s, color 0.3s;
     }
     .arrow-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* Add photo instruction */
-    .photo-instruction {
-      margin-top: 2rem;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid #1e1e1e;
-      border-left: 3px solid var(--gold-dim);
-      background: #0d0d0d;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .photo-instruction code {
-      color: var(--gold);
-      font-family: monospace;
-      background: #1a1a1a;
-      padding: 0.1rem 0.4rem;
-    }
 
     /* ── PROJECTS ── */
     #projects {
@@ -629,6 +587,22 @@
       border: 1px dashed #1e1e1e;
     }
     .gallery-placeholder .ph-icon { font-size: 1.8rem; opacity: 0.15; }
+    .photo-instruction {
+      margin-top: 2rem;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid #1e1e1e;
+      border-left: 3px solid var(--gold-dim);
+      background: #0d0d0d;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .photo-instruction code {
+      color: var(--gold);
+      font-family: monospace;
+      background: #1a1a1a;
+      padding: 0.1rem 0.4rem;
+    }
     /* Lightbox */
     .lightbox {
       display: none;
@@ -789,7 +763,7 @@
     <div class="slideshow-wrapper reveal">
       <div class="slides-track" id="slidesTrack">
 
-        <!-- SLIDE 1 — Replace src with your actual photo path -->
+        <!-- SLIDE 1 -->
         <div class="slide active">
           <div class="slide-inner">
             <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/1campaign.jpg" alt="Campaign 1" />
@@ -801,39 +775,39 @@
         </div>
 
         <!-- SLIDE 2 -->
-      <div class="slide">
-        <div class="slide-inner">
-          <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/2campaign.jpg" alt="Campaign 2" />              </div>
+        <div class="slide">
+          <div class="slide-inner">
+            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/2campaign.jpg" alt="Campaign 2" />
+          </div>
+          <div class="slide-caption">
+            <h3>Event Logistics &amp; Procurement</h3>
+            <p>Multi-site operations &mdash; Vendor &amp; inventory management</p>
+          </div>
         </div>
-        <div class="slide-caption">
-          <h3>Event Logistics &amp; Procurement</h3>
-          <p>Multi-site operations &mdash; Vendor &amp; inventory management</p>
-        </div>
-      </div>
 
         <!-- SLIDE 3 -->
-      <div class="slide">
-        <div class="slide-inner">
-          <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/3campaign.jpg" alt="Campaign 3" />              </div>
+        <div class="slide">
+          <div class="slide-inner">
+            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/3campaign.jpg" alt="Campaign 3" />
+          </div>
+          <div class="slide-caption">
+            <h3>Cold-Chain Field Operations</h3>
+            <p>Inventory handling &amp; storage coordination</p>
+          </div>
         </div>
-        <div class="slide-caption">
-          <h3>Cold-Chain Field Operations</h3>
-          <p>Inventory handling &amp; storage coordination</p>
-        </div>
-      </div>
 
         <!-- SLIDE 4 -->
-      <div class="slide">
-        <div class="slide-inner">
-          <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/3campaign.jpg" alt="Campaign 3" /> 
+        <div class="slide">
+          <div class="slide-inner">
+            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/4campaign.jpg" alt="Campaign 4" />
+          </div>
+          <div class="slide-caption">
+            <h3>Campaign &amp; Distribution Network</h3>
+            <p>Australia &mdash; Supply chain &amp; campaign delivery</p>
+          </div>
         </div>
-        <div class="slide-caption">
-          <h3>Campaign &amp; Distribution Network</h3>
-          <p>Australia &mdash; Supply chain &amp; campaign delivery</p>
-        </div>
-      </div>
 
-    </div>
+      </div>
 
       <!-- Controls -->
       <div class="slide-controls">
@@ -894,7 +868,6 @@
       <div class="divider"></div>
     </div>
 
-    <!-- Filter Tabs -->
     <div class="filter-tabs reveal">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="professional">Professional</button>
@@ -902,13 +875,11 @@
       <button class="filter-btn" data-filter="campaigns">Campaigns</button>
     </div>
 
-    <!-- Masonry Grid -->
     <div class="masonry" id="masonryGrid">
 
-      <!-- PROFESSIONAL -->
       <div class="masonry-item" data-category="professional" data-title="Hutch Best Employee Award" data-sub="Professional Achievement">
         <div class="gallery-placeholder"><div class="ph-icon">🏆</div><span>hutch-best-employee.jpg</span></div>
-        <!-- <img src="images/soccar.png" alt="Hutch Best Employee Award"> -->
+        <!-- <img src="images/hutch-best-employee.jpg" alt="Hutch Best Employee Award"> -->
         <div class="masonry-overlay"><h4>Hutch Best Employee Award</h4><span>Professional Achievement</span></div>
       </div>
 
@@ -918,7 +889,6 @@
         <div class="masonry-overlay"><h4>Hutch Night</h4><span>Corporate Event</span></div>
       </div>
 
-      <!-- ACADEMIC -->
       <div class="masonry-item" data-category="academic" data-title="UOC Soccer Team" data-sub="University of Colombo">
         <div class="gallery-placeholder"><div class="ph-icon">⚽</div><span>uoc-soccer-team.jpg</span></div>
         <!-- <img src="images/uoc-soccer-team.jpg" alt="UOC Soccer Team"> -->
@@ -931,7 +901,6 @@
         <div class="masonry-overlay"><h4>International Relations Workshop</h4><span>Special Degree Programme</span></div>
       </div>
 
-      <!-- CAMPAIGNS -->
       <div class="masonry-item" data-category="campaigns" data-title="Food Promotion Campaign" data-sub="Sri Lanka Operations">
         <div class="gallery-placeholder"><div class="ph-icon">📦</div><span>campaign-food.jpg</span></div>
         <!-- <img src="images/campaign-food.jpg" alt="Food Promotion Campaign"> -->
@@ -966,7 +935,7 @@
 
     <div class="photo-instruction reveal" style="max-width:860px;margin-top:2.5rem;">
       <strong style="color:var(--text);display:block;margin-bottom:0.5rem;">📁 Adding Your Gallery Photos</strong>
-      Add your photos to the <code>images/</code> folder with the filenames shown above. For each item, remove the <code>&lt;div class="gallery-placeholder"&gt;</code> block and uncomment the <code>&lt;img&gt;</code> tag. To add more photos, duplicate a <code>&lt;div class="masonry-item"&gt;</code> block and set <code>data-category</code> to <code>professional</code>, <code>academic</code>, or <code>campaigns</code>.
+      Add your photos to the <code>images/</code> folder with the filenames shown above. For each item, remove the <code>&lt;div class="gallery-placeholder"&gt;</code> block and uncomment the <code>&lt;img&gt;</code> tag.
     </div>
   </section>
 
@@ -1022,7 +991,6 @@
     let current = 0;
     let autoTimer;
 
-    // Build dots
     slides.forEach((_, i) => {
       const dot = document.createElement('div');
       dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -1075,7 +1043,7 @@
 
     function openLightbox(item, items) {
       const img = item.querySelector('img');
-      if (!img) return; // placeholder — no image yet
+      if (!img) return;
       lightboxItems = Array.from(items).filter(i => !i.classList.contains('hidden') && i.querySelector('img'));
       lightboxIndex = lightboxItems.indexOf(item);
       showLightboxSlide();
@@ -1116,7 +1084,7 @@
       if (e.key === 'ArrowRight') { lightboxIndex = (lightboxIndex + 1) % lightboxItems.length; showLightboxSlide(); }
     });
 
-
+    // ── Scroll Reveal ──
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
