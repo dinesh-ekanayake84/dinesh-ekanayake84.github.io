@@ -15,12 +15,11 @@
       --gold: #c9a84c;
       --gold-dim: #8a6f30;
       --white: #f5f5f0;
-      --muted: #6b6b6b;
-      --text: #d0cfc8;
+      --muted: #999999;        /* FIX 2: was #6b6b6b, now brighter */
+      --text: #e8e7e0;         /* FIX 2: was #d0cfc8, now brighter */
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -41,7 +40,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.4rem 4rem;
+      padding: 1.4rem 6rem;           /* FIX 4: wider padding */
       background: rgba(0,0,0,0.85);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid #1a1a1a;
@@ -60,7 +59,7 @@
       list-style: none;
     }
     .nav-links a {
-      color: var(--muted);
+      color: #b0b0a8;              /* FIX 1: was --muted, now clearly visible */
       text-decoration: none;
       font-size: 0.75rem;
       letter-spacing: 0.18em;
@@ -72,14 +71,25 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+      padding: 0 6rem;              /* FIX 4: balanced padding */
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+    }
+    /* FIX 4: outer wrapper to center hero on page */
+    .hero-outer {
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 0 4rem;
       position: relative;
       overflow: hidden;
     }
-    .hero::before {
+    .hero-outer::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -87,6 +97,10 @@
         radial-gradient(ellipse 60% 50% at 80% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
         radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
       pointer-events: none;
+    }
+    .hero-content { /* left column */
+      display: flex;
+      flex-direction: column;
     }
     .hero-eyebrow {
       font-size: 0.7rem;
@@ -107,10 +121,7 @@
       opacity: 0;
       animation: fadeUp 0.9s 0.4s forwards;
     }
-    .hero-name span {
-      color: var(--gold);
-      font-style: italic;
-    }
+    .hero-name span { color: var(--gold); font-style: italic; }
     .hero-roles {
       margin-top: 1.5rem;
       font-size: 0.78rem;
@@ -138,6 +149,48 @@
       opacity: 0;
       animation: fadeUp 0.9s 1s forwards;
     }
+
+    /* FIX 3: Profile photo — right column, circle */
+    .hero-photo-col {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.8s forwards;
+    }
+    .hero-photo-ring {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      flex-shrink: 0;
+    }
+    .hero-photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold) 0deg, transparent 120deg, var(--gold-dim) 240deg, transparent 360deg);
+      animation: spin 12s linear infinite;
+    }
+    .hero-photo-ring::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: var(--black);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
     .btn-primary {
       display: inline-block;
       padding: 0.85rem 2.2rem;
@@ -154,8 +207,8 @@
     .btn-outline {
       display: inline-block;
       padding: 0.85rem 2.2rem;
-      border: 1px solid #2a2a2a;
-      color: var(--muted);
+      border: 1px solid #3a3a3a;
+      color: #b0b0a8;
       font-size: 0.72rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -165,21 +218,13 @@
     }
     .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
 
-    .hero-line {
-      position: absolute;
-      right: 4rem;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 1px;
-      height: 180px;
-      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
-      opacity: 0;
-      animation: fadeIn 1.5s 1.2s forwards;
-    }
-
     /* ── SECTION COMMON ── */
     section {
-      padding: 7rem 4rem;
+      padding: 7rem 6rem;           /* FIX 4: balanced padding */
+    }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
     }
     .section-label {
       font-size: 0.65rem;
@@ -204,14 +249,11 @@
     }
 
     /* ── ABOUT ── */
-    #about {
-      background: var(--near-black);
-    }
+    #about { background: var(--near-black); }
     .about-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
-      max-width: 1100px;
     }
     .about-text p {
       color: var(--text);
@@ -227,10 +269,10 @@
     }
     .skill-tag {
       padding: 0.55rem 1rem;
-      border: 1px solid #222;
+      border: 1px solid #2a2a2a;
       font-size: 0.72rem;
       letter-spacing: 0.1em;
-      color: var(--muted);
+      color: #a0a098;              /* FIX 2: brighter */
       text-transform: uppercase;
       transition: border-color 0.3s, color 0.3s;
     }
@@ -241,10 +283,7 @@
       gap: 2rem;
       justify-content: center;
     }
-    .stat {
-      border-left: 2px solid var(--gold);
-      padding-left: 1.5rem;
-    }
+    .stat { border-left: 2px solid var(--gold); padding-left: 1.5rem; }
     .stat-number {
       font-family: 'Cormorant Garamond', serif;
       font-size: 3rem;
@@ -261,10 +300,7 @@
     }
 
     /* ── SLIDESHOW ── */
-    #campaigns {
-      background: var(--black);
-      padding-bottom: 5rem;
-    }
+    #campaigns { background: var(--black); padding-bottom: 5rem; }
     .slideshow-wrapper {
       position: relative;
       max-width: 1200px;
@@ -275,10 +311,7 @@
       display: flex;
       transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
     }
-    .slide {
-      min-width: 100%;
-      position: relative;
-    }
+    .slide { min-width: 100%; position: relative; }
     .slide-inner {
       position: relative;
       height: 520px;
@@ -293,7 +326,7 @@
       filter: brightness(0.75);
       transition: filter 0.5s;
     }
-    .slide.active img { filter: brightness(0.85); }
+    .slide.active img { filter: brightness(0.88); }
     .slide-caption {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -310,21 +343,16 @@
     .slide-caption p {
       font-size: 0.78rem;
       letter-spacing: 0.1em;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.7);   /* FIX 2: was 0.55 */
       text-transform: uppercase;
     }
-
-    /* Slideshow controls */
     .slide-controls {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1.5rem 0 0;
     }
-    .slide-dots {
-      display: flex;
-      gap: 0.6rem;
-    }
+    .slide-dots { display: flex; gap: 0.6rem; }
     .dot {
       width: 28px;
       height: 2px;
@@ -332,33 +360,22 @@
       cursor: pointer;
       transition: background 0.3s, width 0.3s;
     }
-    .dot.active {
-      background: var(--gold);
-      width: 48px;
-    }
-    .slide-arrows {
-      display: flex;
-      gap: 0.8rem;
-    }
+    .dot.active { background: var(--gold); width: 48px; }
+    .slide-arrows { display: flex; gap: 0.8rem; }
     .arrow-btn {
-      width: 44px;
-      height: 44px;
-      border: 1px solid #222;
+      width: 44px; height: 44px;
+      border: 1px solid #333;
       background: transparent;
-      color: var(--muted);
+      color: #999;
       cursor: pointer;
       font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: border-color 0.3s, color 0.3s;
     }
     .arrow-btn:hover { border-color: var(--gold); color: var(--gold); }
 
     /* ── PROJECTS ── */
-    #projects {
-      background: var(--near-black);
-    }
+    #projects { background: var(--near-black); }
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -377,8 +394,7 @@
       content: '';
       position: absolute;
       top: 0; left: 0;
-      width: 3px;
-      height: 0;
+      width: 3px; height: 0;
       background: var(--gold);
       transition: height 0.4s;
     }
@@ -401,7 +417,7 @@
     }
     .project-card p {
       font-size: 0.85rem;
-      color: var(--muted);
+      color: #a0a098;              /* FIX 2: brighter */
       line-height: 1.75;
     }
     .project-link {
@@ -419,12 +435,8 @@
     .project-link:hover { color: var(--gold); }
 
     /* ── CONNECT ── */
-    #connect {
-      background: var(--black);
-    }
-    .connect-inner {
-      max-width: 800px;
-    }
+    #connect { background: var(--black); }
+    .connect-inner { max-width: 900px; }
     .connect-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -433,7 +445,7 @@
     }
     .connect-card {
       padding: 2rem;
-      border: 1px solid #1a1a1a;
+      border: 1px solid #2a2a2a;
       transition: border-color 0.3s;
     }
     .connect-card:hover { border-color: var(--gold-dim); }
@@ -445,7 +457,7 @@
       margin-bottom: 0.7rem;
     }
     .connect-card a {
-      color: var(--text);
+      color: var(--text);          /* FIX 2: brighter */
       text-decoration: none;
       font-size: 0.88rem;
       word-break: break-all;
@@ -456,21 +468,21 @@
 
     /* ── FOOTER ── */
     footer {
-      padding: 2rem 4rem;
-      border-top: 1px solid #111;
+      padding: 2rem 6rem;
+      border-top: 1px solid #1a1a1a;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     footer p {
       font-size: 0.72rem;
-      color: #333;
+      color: #555;
       letter-spacing: 0.1em;
     }
     .footer-name {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem;
-      color: #333;
+      color: #555;
       letter-spacing: 0.15em;
     }
 
@@ -490,26 +502,16 @@
       transform: translateY(30px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
+    .reveal.visible { opacity: 1; transform: none; }
 
     /* ── GALLERY ── */
-    #gallery {
-      background: var(--near-black);
-    }
-    .filter-tabs {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-bottom: 3rem;
-    }
+    #gallery { background: var(--near-black); }
+    .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
     .filter-btn {
       padding: 0.55rem 1.5rem;
-      border: 1px solid #222;
+      border: 1px solid #2a2a2a;
       background: transparent;
-      color: var(--muted);
+      color: #a0a098;
       font-family: 'DM Sans', sans-serif;
       font-size: 0.7rem;
       letter-spacing: 0.2em;
@@ -524,11 +526,7 @@
       color: var(--black);
       font-weight: 500;
     }
-    .masonry {
-      columns: 3;
-      column-gap: 1rem;
-      max-width: 1200px;
-    }
+    .masonry { columns: 3; column-gap: 1rem; max-width: 1200px; }
     .masonry-item {
       break-inside: avoid;
       margin-bottom: 1rem;
@@ -546,10 +544,7 @@
       filter: brightness(0.8) grayscale(0.2);
       transition: filter 0.4s, transform 0.5s;
     }
-    .masonry-item:hover img {
-      filter: brightness(1) grayscale(0);
-      transform: scale(1.03);
-    }
+    .masonry-item:hover img { filter: brightness(1) grayscale(0); transform: scale(1.03); }
     .masonry-overlay {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -578,31 +573,16 @@
       justify-content: center;
       flex-direction: column;
       gap: 0.5rem;
-      color: #2a2a2a;
+      color: #3a3a3a;
       font-size: 0.7rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       padding: 3rem 1rem;
       background: #0d0d0d;
-      border: 1px dashed #1e1e1e;
+      border: 1px dashed #2a2a2a;
     }
-    .gallery-placeholder .ph-icon { font-size: 1.8rem; opacity: 0.15; }
-    .photo-instruction {
-      margin-top: 2rem;
-      padding: 1.2rem 1.5rem;
-      border: 1px solid #1e1e1e;
-      border-left: 3px solid var(--gold-dim);
-      background: #0d0d0d;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .photo-instruction code {
-      color: var(--gold);
-      font-family: monospace;
-      background: #1a1a1a;
-      padding: 0.1rem 0.4rem;
-    }
+    .gallery-placeholder .ph-icon { font-size: 1.8rem; opacity: 0.2; }
+
     /* Lightbox */
     .lightbox {
       display: none;
@@ -615,12 +595,7 @@
       padding: 2rem;
     }
     .lightbox.open { display: flex; }
-    .lightbox-img {
-      max-width: 88vw;
-      max-height: 82vh;
-      object-fit: contain;
-      border: 1px solid #222;
-    }
+    .lightbox-img { max-width: 88vw; max-height: 82vh; object-fit: contain; border: 1px solid #222; }
     .lightbox-caption {
       position: absolute;
       bottom: 2.5rem;
@@ -647,7 +622,7 @@
       top: 1.5rem; right: 2rem;
       background: transparent;
       border: none;
-      color: var(--muted);
+      color: #999;
       font-size: 2rem;
       cursor: pointer;
       line-height: 1;
@@ -660,7 +635,7 @@
       transform: translateY(-50%);
       background: transparent;
       border: 1px solid #333;
-      color: var(--muted);
+      color: #999;
       width: 44px; height: 44px;
       font-size: 1.1rem;
       cursor: pointer;
@@ -672,15 +647,16 @@
     .lightbox-next { right: 1.5rem; }
 
     /* ── MOBILE ── */
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       nav { padding: 1.2rem 1.5rem; }
       .nav-links { display: none; }
       section { padding: 5rem 1.5rem; }
-      .hero { padding: 0 1.5rem; }
-      .hero-line { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 0 1.5rem; padding-top: 6rem; }
+      .hero-photo-col { order: -1; }
+      .hero-photo-ring { width: 200px; height: 200px; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
       .connect-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 2rem 1.5rem; }
       .slide-inner { height: 320px; }
       .masonry { columns: 2; }
     }
@@ -701,52 +677,71 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero" id="home">
-    <div class="hero-eyebrow">Operations &amp; Logistics Professional</div>
-    <h1 class="hero-name">Dinesh Lanka<br><span>Ekanayake</span></h1>
-    <p class="hero-roles">Operations &nbsp;|&nbsp; Logistics &amp; Supply Chain &nbsp;|&nbsp; Event &amp; Campaign Management</p>
-    <p class="hero-tagline">"Ideas With Purpose. Execution With Impact."</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View Work</a>
-      <a href="#connect" class="btn-outline">Get in Touch</a>
+  <div class="hero-outer" id="home">
+    <div class="hero">
+
+      <!-- Left: text content -->
+      <div class="hero-content">
+        <div class="hero-eyebrow">Operations &amp; Logistics Professional</div>
+        <h1 class="hero-name">Dinesh Lanka<br><span>Ekanayake</span></h1>
+        <p class="hero-roles">Operations &nbsp;|&nbsp; Logistics &amp; Supply Chain &nbsp;|&nbsp; Event &amp; Campaign Management</p>
+        <p class="hero-tagline">"Ideas With Purpose. Execution With Impact."</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View Work</a>
+          <a href="#connect" class="btn-outline">Get in Touch</a>
+        </div>
+      </div>
+
+      <!-- Right: profile photo circle (FIX 3) -->
+      <div class="hero-photo-col">
+        <div class="hero-photo-ring">
+          <img
+            class="hero-photo"
+            src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/Profile_Image.jpeg"
+            alt="Dinesh Lanka Ekanayake"
+          />
+        </div>
+      </div>
+
     </div>
-    <div class="hero-line"></div>
-  </section>
+  </div>
 
   <!-- ABOUT -->
   <section id="about">
-    <div class="reveal">
-      <div class="section-label">Who I Am</div>
-      <h2 class="section-title">Planning. Coordination.<br>Delivery at Scale.</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="about-grid reveal">
-      <div class="about-text">
-        <p>I plan and deliver complex operations — coordinating logistics, procurement, vendor networks, and multi-site campaigns across Sri Lanka and Australia.</p>
-        <p>Interested in supply chain systems, operational planning, and how things move at scale. I bring structure to complex environments and make execution reliable.</p>
-        <div class="skills-grid" style="margin-top:2rem;">
-          <div class="skill-tag">Supply Chain</div>
-          <div class="skill-tag">Procurement</div>
-          <div class="skill-tag">Vendor Management</div>
-          <div class="skill-tag">Event Operations</div>
-          <div class="skill-tag">Cold-Chain Logistics</div>
-          <div class="skill-tag">Campaign Management</div>
-          <div class="skill-tag">Inventory Control</div>
-          <div class="skill-tag">Field Coordination</div>
-        </div>
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">Who I Am</div>
+        <h2 class="section-title">Planning. Coordination.<br>Delivery at Scale.</h2>
+        <div class="divider"></div>
       </div>
-      <div class="stats-box">
-        <div class="stat">
-          <div class="stat-number">2+</div>
-          <div class="stat-label">Countries of Operation</div>
+      <div class="about-grid reveal">
+        <div class="about-text">
+          <p>I plan and deliver complex operations — coordinating logistics, procurement, vendor networks, and multi-site campaigns across Sri Lanka and Australia.</p>
+          <p>Interested in supply chain systems, operational planning, and how things move at scale. I bring structure to complex environments and make execution reliable.</p>
+          <div class="skills-grid" style="margin-top:2rem;">
+            <div class="skill-tag">Supply Chain</div>
+            <div class="skill-tag">Procurement</div>
+            <div class="skill-tag">Vendor Management</div>
+            <div class="skill-tag">Event Operations</div>
+            <div class="skill-tag">Cold-Chain Logistics</div>
+            <div class="skill-tag">Campaign Management</div>
+            <div class="skill-tag">Inventory Control</div>
+            <div class="skill-tag">Field Coordination</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-number">4</div>
-          <div class="stat-label">Major Project Frameworks</div>
-        </div>
-        <div class="stat">
-          <div class="stat-number">100%</div>
-          <div class="stat-label">Field-Verified Methodologies</div>
+        <div class="stats-box">
+          <div class="stat">
+            <div class="stat-number">2+</div>
+            <div class="stat-label">Countries of Operation</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Major Project Frameworks</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Field-Verified Methodologies</div>
+          </div>
         </div>
       </div>
     </div>
@@ -754,67 +749,68 @@
 
   <!-- CAMPAIGN SLIDESHOW -->
   <section id="campaigns">
-    <div class="reveal">
-      <div class="section-label">In the Field</div>
-      <h2 class="section-title">Campaign Moments</h2>
-      <div class="divider"></div>
-    </div>
-
-    <div class="slideshow-wrapper reveal">
-      <div class="slides-track" id="slidesTrack">
-
-        <!-- SLIDE 1 -->
-        <div class="slide active">
-          <div class="slide-inner">
-            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/1campaign.jpg" alt="Campaign 1" />
-          </div>
-          <div class="slide-caption">
-            <h3>Large-Scale Food Promotion Campaign</h3>
-            <p>Sri Lanka &mdash; Multi-vendor coordination &amp; logistics</p>
-          </div>
-        </div>
-
-        <!-- SLIDE 2 -->
-        <div class="slide">
-          <div class="slide-inner">
-            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/2campaign.jpg" alt="Campaign 2" />
-          </div>
-          <div class="slide-caption">
-            <h3>Event Logistics &amp; Procurement</h3>
-            <p>Multi-site operations &mdash; Vendor &amp; inventory management</p>
-          </div>
-        </div>
-
-        <!-- SLIDE 3 -->
-        <div class="slide">
-          <div class="slide-inner">
-            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/3campaign.jpg" alt="Campaign 3" />
-          </div>
-          <div class="slide-caption">
-            <h3>Cold-Chain Field Operations</h3>
-            <p>Inventory handling &amp; storage coordination</p>
-          </div>
-        </div>
-
-        <!-- SLIDE 4 -->
-        <div class="slide">
-          <div class="slide-inner">
-            <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/4campaign.jpg" alt="Campaign 4" />
-          </div>
-          <div class="slide-caption">
-            <h3>Campaign &amp; Distribution Network</h3>
-            <p>Australia &mdash; Supply chain &amp; campaign delivery</p>
-          </div>
-        </div>
-
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">In the Field</div>
+        <h2 class="section-title">Campaign Moments</h2>
+        <div class="divider"></div>
       </div>
+      <div class="slideshow-wrapper reveal">
+        <div class="slides-track" id="slidesTrack">
 
-      <!-- Controls -->
-      <div class="slide-controls">
-        <div class="slide-dots" id="slideDots"></div>
-        <div class="slide-arrows">
-          <button class="arrow-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
-          <button class="arrow-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+          <!-- SLIDE 1 -->
+          <div class="slide active">
+            <div class="slide-inner">
+              <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/1campaign.jpg" alt="Campaign 1" />
+            </div>
+            <div class="slide-caption">
+              <h3>Large-Scale Food Promotion Campaign</h3>
+              <p>Sri Lanka &mdash; Multi-vendor coordination &amp; logistics</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 2 -->
+          <div class="slide">
+            <div class="slide-inner">
+              <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/2campaign.jpg" alt="Campaign 2" />
+            </div>
+            <div class="slide-caption">
+              <h3>Event Logistics &amp; Procurement</h3>
+              <p>Multi-site operations &mdash; Vendor &amp; inventory management</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 3 -->
+          <div class="slide">
+            <div class="slide-inner">
+              <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/3campaign.jpg" alt="Campaign 3" />
+            </div>
+            <div class="slide-caption">
+              <h3>Cold-Chain Field Operations</h3>
+              <p>Inventory handling &amp; storage coordination</p>
+            </div>
+          </div>
+
+          <!-- SLIDE 4 -->
+          <div class="slide">
+            <div class="slide-inner">
+              <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/4campaign.jpg" alt="Campaign 4" />
+            </div>
+            <div class="slide-caption">
+              <h3>Campaign &amp; Distribution Network</h3>
+              <p>Australia &mdash; Supply chain &amp; campaign delivery</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Controls -->
+        <div class="slide-controls">
+          <div class="slide-dots" id="slideDots"></div>
+          <div class="slide-arrows">
+            <button class="arrow-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+            <button class="arrow-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+          </div>
         </div>
       </div>
     </div>
@@ -822,118 +818,119 @@
 
   <!-- PROJECTS -->
   <section id="projects">
-    <div class="reveal">
-      <div class="section-label">Work</div>
-      <h2 class="section-title">Projects &amp; Frameworks</h2>
-      <div class="divider"></div>
-    </div>
-    <div class="projects-grid">
-
-      <div class="project-card reveal">
-        <div class="project-number">01</div>
-        <h3>Event &amp; Logistics Operations Framework</h3>
-        <p>Documenting operational workflows for planning and delivering large-scale events, including logistics, procurement, vendor coordination, and inventory management.</p>
-        <a href="https://github.com/dinesh-ekanayake84/event-operations-framework" class="project-link">View on GitHub &rarr;</a>
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">Work</div>
+        <h2 class="section-title">Projects &amp; Frameworks</h2>
+        <div class="divider"></div>
       </div>
+      <div class="projects-grid">
 
-      <div class="project-card reveal">
-        <div class="project-number">02</div>
-        <h3>Cold-Chain &amp; Inventory Management — Field Notes</h3>
-        <p>Practical field documentation focused on inventory handling, stock rotation, storage procedures, and logistics coordination under real operational conditions.</p>
-        <a href="https://github.com/dinesh-ekanayake84/cold-chain-field-notes" class="project-link">View on GitHub &rarr;</a>
+        <div class="project-card reveal">
+          <div class="project-number">01</div>
+          <h3>Event &amp; Logistics Operations Framework</h3>
+          <p>Documenting operational workflows for planning and delivering large-scale events, including logistics, procurement, vendor coordination, and inventory management.</p>
+          <a href="https://github.com/dinesh-ekanayake84/event-operations-framework" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-number">02</div>
+          <h3>Cold-Chain &amp; Inventory Management — Field Notes</h3>
+          <p>Practical field documentation focused on inventory handling, stock rotation, storage procedures, and logistics coordination under real operational conditions.</p>
+          <a href="https://github.com/dinesh-ekanayake84/cold-chain-field-notes" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-number">03</div>
+          <h3>Multi-Vendor Coordination Playbook</h3>
+          <p>Operational playbook on sourcing, coordinating, and managing multiple vendors for large-scale campaigns and event delivery across diverse supply chains.</p>
+          <a href="https://github.com/dinesh-ekanayake84/multi-vendor-coordination-playbook" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+        </div>
+
+        <div class="project-card reveal">
+          <div class="project-number">04</div>
+          <h3>Campaign Operations Case Study — Large-Scale Food Promotion</h3>
+          <p>End-to-end documentation of a major food promotion campaign: planning, resource allocation, field execution, vendor management, and post-campaign review.</p>
+          <a href="https://github.com/dinesh-ekanayake84/campaign-operations-case-study" target="_blank" rel="noopener" class="project-link">View on GitHub &rarr;</a>
+        </div>
+
       </div>
-
-      <div class="project-card reveal">
-        <div class="project-number">03</div>
-        <h3>Multi-Vendor Coordination Playbook</h3>
-        <p>Operational playbook on sourcing, coordinating, and managing multiple vendors for large-scale campaigns and event delivery across diverse supply chains.</p>
-        <a href="https://github.com/dinesh-ekanayake84/multi-vendor-coordination-playbook" class="project-link">View on GitHub &rarr;</a>
-      </div>
-
-      <div class="project-card reveal">
-        <div class="project-number">04</div>
-        <h3>Campaign Operations Case Study — Large-Scale Food Promotion</h3>
-        <p>End-to-end documentation of a major food promotion campaign: planning, resource allocation, field execution, vendor management, and post-campaign review.</p>
-        <a href="https://github.com/dinesh-ekanayake84/campaign-operations-case-study" class="project-link">View on GitHub &rarr;</a>
-      </div>
-
     </div>
   </section>
 
   <!-- GALLERY -->
   <section id="gallery">
-    <div class="reveal">
-      <div class="section-label">Milestones &amp; Moments</div>
-      <h2 class="section-title">Gallery</h2>
-      <div class="divider"></div>
+    <div class="section-inner">
+      <div class="reveal">
+        <div class="section-label">Milestones &amp; Moments</div>
+        <h2 class="section-title">Gallery</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="filter-tabs reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="professional">Professional</button>
+        <button class="filter-btn" data-filter="academic">Academic</button>
+        <button class="filter-btn" data-filter="campaigns">Campaigns</button>
+      </div>
+
+      <div class="masonry" id="masonryGrid">
+
+        <div class="masonry-item" data-category="professional" data-title="Hutch Best Employee Award" data-sub="Professional Achievement">
+          <div class="gallery-placeholder"><div class="ph-icon">🏆</div><span>hutch-best-employee.jpg</span></div>
+          <!-- <img src="images/hutch-best-employee.jpg" alt="Hutch Best Employee Award"> -->
+          <div class="masonry-overlay"><h4>Hutch Best Employee Award</h4><span>Professional Achievement</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="professional" data-title="Hutch Night" data-sub="Corporate Event">
+          <div class="gallery-placeholder"><div class="ph-icon">🌙</div><span>hutch-night.jpg</span></div>
+          <!-- <img src="images/hutch-night.jpg" alt="Hutch Night"> -->
+          <div class="masonry-overlay"><h4>Hutch Night</h4><span>Corporate Event</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="academic" data-title="UOC Soccer Team" data-sub="University of Colombo">
+          <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/soccar.png" alt="UOC Soccer Team" />
+          <div class="masonry-overlay"><h4>UOC Soccer Team</h4><span>University of Colombo</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="academic" data-title="International Relations Workshop" data-sub="Special Degree Programme">
+          <div class="gallery-placeholder"><div class="ph-icon">🎓</div><span>ir-workshop.jpg</span></div>
+          <!-- <img src="images/ir-workshop.jpg" alt="International Relations Workshop"> -->
+          <div class="masonry-overlay"><h4>International Relations Workshop</h4><span>Special Degree Programme</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="campaigns" data-title="Food Promotion Campaign" data-sub="Sri Lanka Operations">
+          <div class="gallery-placeholder"><div class="ph-icon">📦</div><span>campaign-food.jpg</span></div>
+          <!-- <img src="images/campaign-food.jpg" alt="Food Promotion Campaign"> -->
+          <div class="masonry-overlay"><h4>Food Promotion Campaign</h4><span>Sri Lanka Operations</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="campaigns" data-title="Vendor Coordination" data-sub="Multi-Site Logistics">
+          <div class="gallery-placeholder"><div class="ph-icon">🚚</div><span>campaign-vendor.jpg</span></div>
+          <!-- <img src="images/campaign-vendor.jpg" alt="Vendor Coordination"> -->
+          <div class="masonry-overlay"><h4>Vendor Coordination</h4><span>Multi-Site Logistics</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="professional" data-title="Field Operations" data-sub="Campaign Execution">
+          <div class="gallery-placeholder"><div class="ph-icon">📋</div><span>field-ops.jpg</span></div>
+          <!-- <img src="images/field-ops.jpg" alt="Field Operations"> -->
+          <div class="masonry-overlay"><h4>Field Operations</h4><span>Campaign Execution</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="academic" data-title="Special Degree Ceremony" data-sub="Academic Milestone">
+          <div class="gallery-placeholder"><div class="ph-icon">🎖️</div><span>degree-ceremony.jpg</span></div>
+          <!-- <img src="images/degree-ceremony.jpg" alt="Degree Ceremony"> -->
+          <div class="masonry-overlay"><h4>Special Degree Ceremony</h4><span>Academic Milestone</span></div>
+        </div>
+
+        <div class="masonry-item" data-category="campaigns" data-title="Cold-Chain Operations" data-sub="Inventory & Storage">
+          <div class="gallery-placeholder"><div class="ph-icon">❄️</div><span>cold-chain.jpg</span></div>
+          <!-- <img src="images/cold-chain.jpg" alt="Cold-Chain Operations"> -->
+          <div class="masonry-overlay"><h4>Cold-Chain Operations</h4><span>Inventory &amp; Storage</span></div>
+        </div>
+
+      </div>
     </div>
-
-    <div class="filter-tabs reveal">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="professional">Professional</button>
-      <button class="filter-btn" data-filter="academic">Academic</button>
-      <button class="filter-btn" data-filter="campaigns">Campaigns</button>
-    </div>
-
-    <div class="masonry" id="masonryGrid">
-
-      <div class="masonry-item" data-category="professional" data-title="Hutch Best Employee Award" data-sub="Professional Achievement">
-        <div class="gallery-placeholder"><div class="ph-icon">🏆</div><span>hutch-best-employee.jpg</span></div>
-        <!-- <img src="images/hutch-best-employee.jpg" alt="Hutch Best Employee Award"> -->
-        <div class="masonry-overlay"><h4>Hutch Best Employee Award</h4><span>Professional Achievement</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="professional" data-title="Hutch Night" data-sub="Corporate Event">
-        <div class="gallery-placeholder"><div class="ph-icon">🌙</div><span>hutch-night.jpg</span></div>
-        <!-- <img src="images/hutch-night.jpg" alt="Hutch Night"> -->
-        <div class="masonry-overlay"><h4>Hutch Night</h4><span>Corporate Event</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="academic" data-title="UOC Soccer Team" data-sub="University of Colombo">
-        <div class="gallery-placeholder"><div class="ph-icon">⚽</div><span>soccar.png</span></div>
-        <img src="https://raw.githubusercontent.com/dinesh-ekanayake84/dinesh-ekanayake84.github.io/main/images/soccar.png" alt="Football Team-UOC" />
-        <div class="masonry-overlay"><h4>UOC Soccer Team</h4><span>University of Colombo</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="academic" data-title="International Relations Workshop" data-sub="Special Degree Programme">
-        <div class="gallery-placeholder"><div class="ph-icon">🎓</div><span>ir-workshop.jpg</span></div>
-        <!-- <img src="images/ir-workshop.jpg" alt="International Relations Workshop"> -->
-        <div class="masonry-overlay"><h4>International Relations Workshop</h4><span>Special Degree Programme</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="campaigns" data-title="Food Promotion Campaign" data-sub="Sri Lanka Operations">
-        <div class="gallery-placeholder"><div class="ph-icon">📦</div><span>campaign-food.jpg</span></div>
-        <!-- <img src="images/campaign-food.jpg" alt="Food Promotion Campaign"> -->
-        <div class="masonry-overlay"><h4>Food Promotion Campaign</h4><span>Sri Lanka Operations</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="campaigns" data-title="Vendor Coordination" data-sub="Multi-Site Logistics">
-        <div class="gallery-placeholder"><div class="ph-icon">🚚</div><span>campaign-vendor.jpg</span></div>
-        <!-- <img src="images/campaign-vendor.jpg" alt="Vendor Coordination"> -->
-        <div class="masonry-overlay"><h4>Vendor Coordination</h4><span>Multi-Site Logistics</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="professional" data-title="Field Operations" data-sub="Campaign Execution">
-        <div class="gallery-placeholder"><div class="ph-icon">📋</div><span>field-ops.jpg</span></div>
-        <!-- <img src="images/field-ops.jpg" alt="Field Operations"> -->
-        <div class="masonry-overlay"><h4>Field Operations</h4><span>Campaign Execution</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="academic" data-title="Special Degree Ceremony" data-sub="Academic Milestone">
-        <div class="gallery-placeholder"><div class="ph-icon">🎖️</div><span>degree-ceremony.jpg</span></div>
-        <!-- <img src="images/degree-ceremony.jpg" alt="Degree Ceremony"> -->
-        <div class="masonry-overlay"><h4>Special Degree Ceremony</h4><span>Academic Milestone</span></div>
-      </div>
-
-      <div class="masonry-item" data-category="campaigns" data-title="Cold-Chain Operations" data-sub="Inventory & Storage">
-        <div class="gallery-placeholder"><div class="ph-icon">❄️</div><span>cold-chain.jpg</span></div>
-        <!-- <img src="images/cold-chain.jpg" alt="Cold-Chain Operations"> -->
-        <div class="masonry-overlay"><h4>Cold-Chain Operations</h4><span>Inventory &amp; Storage</span></div>
-      </div>
-
-    </div>
-
-    
   </section>
 
   <!-- LIGHTBOX -->
@@ -950,24 +947,26 @@
 
   <!-- CONNECT -->
   <section id="connect">
-    <div class="connect-inner">
-      <div class="reveal">
-        <div class="section-label">Get in Touch</div>
-        <h2 class="section-title">Let's Connect</h2>
-        <div class="divider"></div>
-      </div>
-      <div class="connect-grid reveal">
-        <div class="connect-card">
-          <div class="connect-type">LinkedIn</div>
-          <a href="https://www.linkedin.com/in/dinesh-ekanayake-103a697b/" target="_blank" rel="noopener">linkedin.com/in/<br>dinesh-ekanayake-103a697b/</a>
+    <div class="section-inner">
+      <div class="connect-inner">
+        <div class="reveal">
+          <div class="section-label">Get in Touch</div>
+          <h2 class="section-title">Let's Connect</h2>
+          <div class="divider"></div>
         </div>
-        <div class="connect-card">
-          <div class="connect-type">Email</div>
-          <a href="mailto:dineshekanayake1984@gmail.com">dineshekanayake1984<br>@gmail.com</a>
-        </div>
-        <div class="connect-card">
-          <div class="connect-type">GitHub</div>
-          <a href="https://github.com/dinesh-ekanayake84" target="_blank" rel="noopener">github.com/<br>dinesh-ekanayake84</a>
+        <div class="connect-grid reveal">
+          <div class="connect-card">
+            <div class="connect-type">LinkedIn</div>
+            <a href="https://www.linkedin.com/in/dinesh-ekanayake-103a697b/" target="_blank" rel="noopener">linkedin.com/in/dinesh-ekanayake-103a697b/</a>
+          </div>
+          <div class="connect-card">
+            <div class="connect-type">Email</div>
+            <a href="mailto:dineshekanayake1984@gmail.com">dineshekanayake1984@gmail.com</a>
+          </div>
+          <div class="connect-card">
+            <div class="connect-type">GitHub</div>
+            <a href="https://github.com/dinesh-ekanayake84" target="_blank" rel="noopener">github.com/dinesh-ekanayake84</a>
+          </div>
         </div>
       </div>
     </div>
