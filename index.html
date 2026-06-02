@@ -1,85 +1,842 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dinesh Ekanayake</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dinesh Lanka Ekanayake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#0b0f1a;color:#e9ecf1;}
-    .wrap{max-width:900px;margin:0 auto;padding:56px 20px;}
-    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:28px;}
-    h1{margin:0 0 6px;font-size:34px;letter-spacing:.2px}
-    .sub{opacity:.85;margin:0 0 18px;font-size:16px}
-    .tag{margin:0 0 22px; font-style:italic; opacity:.9}
-    .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
-    .box{padding:16px;border-radius:14px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.10)}
-    a{color:#a9c7ff;text-decoration:none}
-    a:hover{text-decoration:underline}
-    .small{opacity:.8;font-size:13px;margin-top:16px}
+    :root {
+      --black: #000000;
+      --near-black: #0a0a0a;
+      --card-bg: #111111;
+      --card-border: #1e1e1e;
+      --gold: #c9a84c;
+      --gold-dim: #8a6f30;
+      --white: #f5f5f0;
+      --muted: #6b6b6b;
+      --text: #d0cfc8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(201,168,76,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.0;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-name span {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .hero-roles {
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-tagline {
+      margin-top: 2.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      max-width: 520px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .hero-cta {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+    .btn-primary {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #e0bb62; transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border: 1px solid #2a2a2a;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 400;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-line {
+      position: absolute;
+      right: 4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 180px;
+      background: linear-gradient(to bottom, transparent, var(--gold-dim), transparent);
+      opacity: 0;
+      animation: fadeIn 1.5s 1.2s forwards;
+    }
+
+    /* ── SECTION COMMON ── */
+    section {
+      padding: 7rem 4rem;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 3rem;
+    }
+    .divider {
+      width: 50px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 3rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--near-black);
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1100px;
+    }
+    .about-text p {
+      color: var(--text);
+      margin-bottom: 1.2rem;
+      font-size: 1rem;
+      line-height: 1.85;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1.5rem;
+    }
+    .skill-tag {
+      padding: 0.55rem 1rem;
+      border: 1px solid #222;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .skill-tag:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .stats-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .stat {
+      border-left: 2px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    /* ── SLIDESHOW ── */
+    #campaigns {
+      background: var(--black);
+      padding-bottom: 5rem;
+    }
+    .slideshow-wrapper {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .slides-track {
+      display: flex;
+      transition: transform 0.7s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+    .slide {
+      min-width: 100%;
+      position: relative;
+    }
+    .slide-inner {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+      background: #111;
+    }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.75);
+      transition: filter 0.5s;
+    }
+    .slide.active img { filter: brightness(0.85); }
+    .slide-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem 2.5rem 2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+    }
+    .slide-caption h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+    .slide-caption p {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+    }
+    /* Placeholder slide when no image */
+    .slide-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);
+      border: 1px dashed #2a2a2a;
+    }
+    .slide-placeholder-text {
+      text-align: center;
+      color: var(--muted);
+    }
+    .slide-placeholder-text .icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.3;
+    }
+    .slide-placeholder-text p {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* Slideshow controls */
+    .slide-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0 0;
+    }
+    .slide-dots {
+      display: flex;
+      gap: 0.6rem;
+    }
+    .dot {
+      width: 28px;
+      height: 2px;
+      background: #2a2a2a;
+      cursor: pointer;
+      transition: background 0.3s, width 0.3s;
+    }
+    .dot.active {
+      background: var(--gold);
+      width: 48px;
+    }
+    .slide-arrows {
+      display: flex;
+      gap: 0.8rem;
+    }
+    .arrow-btn {
+      width: 44px;
+      height: 44px;
+      border: 1px solid #222;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .arrow-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* Add photo instruction */
+    .photo-instruction {
+      margin-top: 2rem;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid #1e1e1e;
+      border-left: 3px solid var(--gold-dim);
+      background: #0d0d0d;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .photo-instruction code {
+      color: var(--gold);
+      font-family: monospace;
+      background: #1a1a1a;
+      padding: 0.1rem 0.4rem;
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      background: var(--near-black);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5px;
+      max-width: 1200px;
+    }
+    .project-card {
+      background: var(--card-bg);
+      padding: 2.2rem;
+      border: 1px solid var(--card-border);
+      position: relative;
+      transition: border-color 0.35s, background 0.35s;
+      cursor: default;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--gold);
+      transition: height 0.4s;
+    }
+    .project-card:hover { border-color: #2a2a2a; background: #141414; }
+    .project-card:hover::before { height: 100%; }
+    .project-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: var(--gold-dim);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+    .project-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+    .project-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .project-link:hover { color: var(--gold); }
+
+    /* ── CONNECT ── */
+    #connect {
+      background: var(--black);
+    }
+    .connect-inner {
+      max-width: 800px;
+    }
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .connect-card {
+      padding: 2rem;
+      border: 1px solid #1a1a1a;
+      transition: border-color 0.3s;
+    }
+    .connect-card:hover { border-color: var(--gold-dim); }
+    .connect-type {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+    }
+    .connect-card a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      word-break: break-all;
+      transition: color 0.3s;
+      display: block;
+    }
+    .connect-card a:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      border-top: 1px solid #111;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    footer p {
+      font-size: 0.72rem;
+      color: #333;
+      letter-spacing: 0.1em;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: #333;
+      letter-spacing: 0.15em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      .hero { padding: 0 1.5rem; }
+      .hero-line { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .connect-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .slide-inner { height: 320px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <h1>Dinesh Lanka Ekanayake</h1>
-      <p class="sub">Operations | Logistics & Supply Chain | Event & Campaign Management</p>
-      <p class="tag">Ideas With Purpose. Execution With Impact.</p>
 
-      <div class="grid">
-        <div class="box">
-          <strong>About</strong>
-          <p class="sub">I plan and deliver complex operations — coordinating logistics, procurement, vendor networks, and multi-site campaigns across Sri Lanka and Australia. Interested in supply chain systems, operational planning, and how things move at scale.</p>
-        </div>
-        <div class="box">
-          <strong>Projects</strong>
-          <p class="sub">
-            <a href="https://github.com/dinesh-ekanayake84/event-operations-framework" target="_blank" rel="noreferrer">
-             Event & Logistics Operations Framework
-            </a><br/>
-            Documenting operational workflows for planning and delivering large-scale events, including logistics, procurement, vendor coordination, and inventory management.
-          </p>
-          <hr>
-          <p class="sub">
-            <a href="https://github.com/dinesh-ekanayake84/cold-chain-field-notes" target="_blank" rel="noreferrer">Cold-Chain & Inventory Management — Field Notes
-            </a><br/>
-            Practical field documentation focused on inventory handling, stock rotation, storage procedures, and logistics coordination.
-           </p>
-           <hr>
-           <p class="sub">
-             <a href="https://github.com/dinesh-ekanayake84/multi-vendor-coordination-playbook"
-               target="_blank"
-               rel="noreferrer">
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">D.L. Ekanayake</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#campaigns">Campaigns</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
 
-               Multi-Vendor Coordination Playbook
-               
-             </a><br/>
-             Operational playbook on sourcing, coordinating, and managing multiple vendors for large-scale campaigns and event delivery.
-           </p>
-           <hr>
-           <p class="sub">
-             <a href="https://github.com/dinesh-ekanayake84/campaign-operations-case-study"
-               target="_blank"
-               rel="noreferrer">
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-eyebrow">Operations &amp; Logistics Professional</div>
+    <h1 class="hero-name">Dinesh Lanka<br><span>Ekanayake</span></h1>
+    <p class="hero-roles">Operations &nbsp;|&nbsp; Logistics &amp; Supply Chain &nbsp;|&nbsp; Event &amp; Campaign Management</p>
+    <p class="hero-tagline">"Ideas With Purpose. Execution With Impact."</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Work</a>
+      <a href="#connect" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-line"></div>
+  </section>
 
-               Campaign Operations Case Study—Large-Scale Food Promotion Campaign
-              </a><br/>
-              Case study documenting campaign planning, operational coordination, logistics challenges, and execution strategies for a large-scale promotional initiative.
-           </p>
-           
-        </div>
-        <div class="box">
-          <strong>Connect</strong>
-          <p class="sub">
-            LinkedIn: <a href="https://www.linkedin.com/in/dinesh-ekanayake-103a697b/" target="_blank" rel="noreferrer">https://www.linkedin.com/in/dinesh-ekanayake-103a697b/</a><br/>
-            Email: <a href="mailto:your@email.com">dineshekanayake1984@email.com</a>
-            Github: <a href="https://github.com/dinesh-ekanayake84" target="_blank" rel="noreferrer">https://github.com/dinesh-ekanayake84</a><br/>
-          </p>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-label">Who I Am</div>
+      <h2 class="section-title">Planning. Coordination.<br>Delivery at Scale.</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I plan and deliver complex operations — coordinating logistics, procurement, vendor networks, and multi-site campaigns across Sri Lanka and Australia.</p>
+        <p>Interested in supply chain systems, operational planning, and how things move at scale. I bring structure to complex environments and make execution reliable.</p>
+        <div class="skills-grid" style="margin-top:2rem;">
+          <div class="skill-tag">Supply Chain</div>
+          <div class="skill-tag">Procurement</div>
+          <div class="skill-tag">Vendor Management</div>
+          <div class="skill-tag">Event Operations</div>
+          <div class="skill-tag">Cold-Chain Logistics</div>
+          <div class="skill-tag">Campaign Management</div>
+          <div class="skill-tag">Inventory Control</div>
+          <div class="skill-tag">Field Coordination</div>
         </div>
       </div>
-
-      <p class="small">Last updated: <span id="d"></span></p>
+      <div class="stats-box">
+        <div class="stat">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Countries of Operation</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Major Project Frameworks</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Field-Verified Methodologies</div>
+        </div>
+      </div>
     </div>
-  </div>
-  <script>document.getElementById("d").textContent=new Date().toISOString().slice(0,10);</script>
+  </section>
+
+  <!-- CAMPAIGN SLIDESHOW -->
+  <section id="campaigns">
+    <div class="reveal">
+      <div class="section-label">In the Field</div>
+      <h2 class="section-title">Campaign Moments</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="slideshow-wrapper reveal">
+      <div class="slides-track" id="slidesTrack">
+
+        <!-- SLIDE 1 — Replace src with your actual photo path -->
+        <div class="slide active">
+          <div class="slide-inner">
+            <div class="slide-placeholder">
+              <div class="slide-placeholder-text">
+                <div class="icon">📸</div>
+                <p>Campaign Photo 1</p>
+                <p style="margin-top:0.5rem;font-size:0.65rem;color:#333">Replace with your image</p>
+              </div>
+            </div>
+            <!-- Uncomment and update src when you add your photos:
+            <img src="images/campaign1.jpg" alt="Campaign 1" />
+            -->
+          </div>
+          <div class="slide-caption">
+            <h3>Large-Scale Food Promotion Campaign</h3>
+            <p>Sri Lanka &mdash; Multi-vendor coordination &amp; logistics</p>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-placeholder">
+              <div class="slide-placeholder-text">
+                <div class="icon">📸</div>
+                <p>Campaign Photo 2</p>
+                <p style="margin-top:0.5rem;font-size:0.65rem;color:#333">Replace with your image</p>
+              </div>
+            </div>
+            <!-- <img src="images/campaign2.jpg" alt="Campaign 2" /> -->
+          </div>
+          <div class="slide-caption">
+            <h3>Event Logistics &amp; Procurement</h3>
+            <p>Multi-site operations &mdash; Vendor &amp; inventory management</p>
+          </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-placeholder">
+              <div class="slide-placeholder-text">
+                <div class="icon">📸</div>
+                <p>Campaign Photo 3</p>
+                <p style="margin-top:0.5rem;font-size:0.65rem;color:#333">Replace with your image</p>
+              </div>
+            </div>
+            <!-- <img src="images/campaign3.jpg" alt="Campaign 3" /> -->
+          </div>
+          <div class="slide-caption">
+            <h3>Cold-Chain Field Operations</h3>
+            <p>Inventory handling &amp; storage coordination</p>
+          </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+          <div class="slide-inner">
+            <div class="slide-placeholder">
+              <div class="slide-placeholder-text">
+                <div class="icon">📸</div>
+                <p>Campaign Photo 4</p>
+                <p style="margin-top:0.5rem;font-size:0.65rem;color:#333">Replace with your image</p>
+              </div>
+            </div>
+            <!-- <img src="images/campaign4.jpg" alt="Campaign 4" /> -->
+          </div>
+          <div class="slide-caption">
+            <h3>Campaign &amp; Distribution Network</h3>
+            <p>Australia &mdash; Supply chain &amp; campaign delivery</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Controls -->
+      <div class="slide-controls">
+        <div class="slide-dots" id="slideDots"></div>
+        <div class="slide-arrows">
+          <button class="arrow-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+          <button class="arrow-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instruction for adding photos -->
+    <div class="photo-instruction reveal" style="max-width:860px;margin-top:2.5rem;">
+      <strong style="color:var(--text);display:block;margin-bottom:0.5rem;">📁 Adding Your Campaign Photos</strong>
+      Create a folder called <code>images/</code> in your repo root. Add your photos as <code>campaign1.jpg</code>, <code>campaign2.jpg</code>, etc.
+      Then uncomment the <code>&lt;img&gt;</code> tags inside each slide and remove the placeholder <code>&lt;div&gt;</code>. You can add more slides by duplicating a <code>&lt;div class="slide"&gt;</code> block.
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <div class="section-label">Work</div>
+      <h2 class="section-title">Projects &amp; Frameworks</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-number">01</div>
+        <h3>Event &amp; Logistics Operations Framework</h3>
+        <p>Documenting operational workflows for planning and delivering large-scale events, including logistics, procurement, vendor coordination, and inventory management.</p>
+        <a href="#" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">02</div>
+        <h3>Cold-Chain &amp; Inventory Management — Field Notes</h3>
+        <p>Practical field documentation focused on inventory handling, stock rotation, storage procedures, and logistics coordination under real operational conditions.</p>
+        <a href="#" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">03</div>
+        <h3>Multi-Vendor Coordination Playbook</h3>
+        <p>Operational playbook on sourcing, coordinating, and managing multiple vendors for large-scale campaigns and event delivery across diverse supply chains.</p>
+        <a href="#" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-number">04</div>
+        <h3>Campaign Operations Case Study — Large-Scale Food Promotion</h3>
+        <p>End-to-end documentation of a major food promotion campaign: planning, resource allocation, field execution, vendor management, and post-campaign review.</p>
+        <a href="#" class="project-link">View on GitHub &rarr;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONNECT -->
+  <section id="connect">
+    <div class="connect-inner">
+      <div class="reveal">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="divider"></div>
+      </div>
+      <div class="connect-grid reveal">
+        <div class="connect-card">
+          <div class="connect-type">LinkedIn</div>
+          <a href="https://www.linkedin.com/in/dinesh-ekanayake-103a697b/" target="_blank" rel="noopener">linkedin.com/in/<br>dinesh-ekanayake-103a697b/</a>
+        </div>
+        <div class="connect-card">
+          <div class="connect-type">Email</div>
+          <a href="mailto:dineshekanayake1984@gmail.com">dineshekanayake1984<br>@gmail.com</a>
+        </div>
+        <div class="connect-card">
+          <div class="connect-type">GitHub</div>
+          <a href="https://github.com/dinesh-ekanayake84" target="_blank" rel="noopener">github.com/<br>dinesh-ekanayake84</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Dinesh Lanka Ekanayake</div>
+    <p>&copy; 2026 &mdash; Operations | Logistics | Campaigns</p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // ── Slideshow ──
+    const track = document.getElementById('slidesTrack');
+    const slides = track.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('slideDots');
+    let current = 0;
+    let autoTimer;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    function goTo(index) {
+      slides[current].classList.remove('active');
+      dotsContainer.children[current].classList.remove('active');
+      current = (index + slides.length) % slides.length;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      slides[current].classList.add('active');
+      dotsContainer.children[current].classList.add('active');
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => { goTo(current - 1); resetTimer(); });
+    document.getElementById('nextBtn').addEventListener('click', () => { goTo(current + 1); resetTimer(); });
+
+    function startTimer() { autoTimer = setInterval(() => goTo(current + 1), 4500); }
+    function resetTimer() { clearInterval(autoTimer); startTimer(); }
+    startTimer();
+
+    // ── Scroll Reveal ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
