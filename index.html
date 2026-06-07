@@ -433,7 +433,54 @@
       transition: color 0.3s;
     }
     .project-link:hover { color: var(--gold); }
+    
+    /* ── EDUCATION ── */
+    #education {
+    background: var(--black);
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+  }
 
+  .education-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem;
+  border: 1px solid #1f1f1f;
+  background: #0b0b0b;
+  }
+
+  .education-degree {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  }
+
+  .education-major {
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin-bottom: 1.5rem;
+  }
+
+  .education-university {
+  color: var(--text);
+  margin-bottom: 2rem;
+  }
+
+  .education-thesis-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+  }
+
+  .education-thesis {
+  color: var(--muted);
+  line-height: 1.8;
+  }
+    
     /* ── CONNECT ── */
     #connect { background: var(--black); }
     .connect-inner { max-width: 1200px; }
@@ -944,7 +991,40 @@
       <p id="lightboxSub"></p>
     </div>
   </div>
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Academic Foundation</div>
+      <h2 class="section-title">Education</h2>
+      <div class="divider"></div>
+    </div>
+  ```
+  <div class="education-card reveal">
+    <div class="education-degree">
+      Bachelor of Arts (Special Degree)
+  </div>
 
+    <div class="education-major">
+      International Relations
+    </div>
+
+    <div class="education-university">
+      University of Colombo, Sri Lanka
+    </div>
+
+    <div class="education-thesis-title">
+      Honours Dissertation
+    </div>
+
+    <div class="education-thesis">
+      “The Impact of International Relations on Post-1948 Political Dynamics in Sri Lanka”
+    </div>
+  </div>
+  ```
+
+    </div>
+  </section>      
   <!-- CONNECT -->
   <section id="connect">
     <div class="section-inner">
